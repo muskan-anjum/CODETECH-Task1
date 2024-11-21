@@ -1,0 +1,74 @@
+# Student Grade Tracker
+
+def calculate_letter_grade(average):
+    """Convert numerical average to a letter grade."""
+    if average >= 90:
+        return 'A', 4.0
+    elif average >= 80:
+        return 'B', 3.0
+    elif average >= 70:
+        return 'C', 2.0
+    elif average >= 60:
+        return 'D', 1.0
+    else:
+        return 'F', 0.0
+
+def display_menu():
+    """Display the main menu options."""
+    print("\n--- Student Grade Tracker ---")
+    print("1. Add Grade")
+    print("2. View Grades")
+    print("3. Calculate Average and GPA")
+    print("4. Exit")
+
+def main():
+    grades = []
+
+    while True:
+        display_menu()
+        choice = input("Enter your choice: ")
+
+        if choice == '1':  # Add a grade
+            subject = input("Enter the subject or assignment name: ")
+            try:
+                grade = float(input(f"Enter the grade for {subject} (0-100): "))
+                if 0 <= grade <= 100:
+                    grades.append((subject, grade))
+                    print(f"Grade for {subject} added successfully!")
+                else:
+                    print("Invalid grade. Please enter a value between 0 and 100.")
+            except ValueError:
+                print("Invalid input. Please enter a numeric grade.")
+
+        elif choice == '2':  # View all grades
+            if grades:
+                print("\n--- Grades ---")
+                for idx, (subject, grade) in enumerate(grades, 1):
+                    print(f"{idx}. {subject}: {grade}")
+            else:
+                print("No grades recorded yet.")
+
+        elif choice == '3':  # Calculate average and GPA
+            if grades:
+                total = sum(grade for _, grade in grades)
+                average = total / len(grades)
+                letter, gpa = calculate_letter_grade(average)
+
+                print("\n--- Grade Summary ---")
+                print(f"Total Grades Recorded: {len(grades)}")
+                print(f"Average Grade: {average:.2f}")
+                print(f"Letter Grade: {letter}")
+                print(f"GPA: {gpa:.2f}")
+            else:
+                print("No grades recorded yet. Add some grades first.")
+
+        elif choice == '4':  # Exit
+            print("Exiting the program. Goodbye!")
+            break
+
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+# Run the program
+if __name__ == "__main__":
+    main()
